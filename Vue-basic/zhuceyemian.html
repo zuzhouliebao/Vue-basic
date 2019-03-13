@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<!-- 通过cdn引入vue.js -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+		<style type="text/css">
+			.head {
+
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: 50px;
+				background-position: center;
+
+			}
+
+			#app {
+				background-image: url(img/8.jpg);
+				background-position: center;
+				background-size: 100% 100%;
+			}
+
+			.brand-logo {
+				color: #FFFFFF;
+				font-size: 35px;
+				margin-left: 10px;
+			}
+			.content {
+				width: 80%;
+				height: 650px;
+				margin: 0 auto;
+				margin-top: 30px;
+
+			}
+
+			.wname {
+				display: flex;
+				margin-top: 10px;
+				margin-left: 45px;
+			}
+
+			.a {
+				width: 200px;
+				height: 40px;
+				border-radius: 10px;
+				margin-left: 60px;
+				border: 1px solid #DDDDDD;
+				outline: none;
+			}
+			.p{
+				color: #FFFFFF;
+			}
+
+			.password {
+				display: flex;
+				margin-top: 10px;
+				margin-left: 60px;
+			}
+
+			.sex {
+				display: flex;
+				margin-top: 10px;
+				margin-left: 100px;
+			}
+
+			.c {
+				margin-top: 15px;
+				margin-left: 5px;
+			}
+
+			.papers {
+				display: flex;
+				margin-top: 10px;
+				margin-left: 85px;
+			}
+
+			.nus {
+				display: flex;
+				margin-top: 10px;
+				margin-left: 80px;
+			}
+
+			.intr {
+				display: flex;
+				margin-top: 10px;
+				margin-left: 100px;
+			}
+
+			.hobby {
+				display: flex;
+				margin-top: 10px;
+				margin-left: 80px;
+			}
+
+			.f {
+				margin-top: 14px;
+			}
+
+			.footer {
+				margin-left: 120px;
+			}
+
+			.g {
+				width: 200px;
+				height: 50px;
+				border-radius: 10px;
+				border: 1px solid #DDDDDD;
+				outline: none;
+				background-color: rgb(169, 198, 228);
+				color: #EEEEEE;
+
+			}
+		</style>
+	</head>
+	<body>
+		<!-- vue-app根容器 -->
+		<div id="app">
+			<div class="head">
+				<a href="#" class="brand-logo">你好，旧时光</a>
+			</div>
+			<div class="content">
+				<div class="wname">
+					<p class="p"><i class="icon-asterisk"></i>请输入用户名:</p>
+					<input v-model="netname" placeholder="	用户名" class="a">
+				</div>
+				<div class="password">
+					<p class="p"><i class="icon-asterisk"></i>请输入密码:</p>
+					<input v-model="password" placeholder="	密码" class="a">
+				</div>
+				<div class="password">
+					<p class="p"><i class="icon-asterisk"></i>请确认密码:</p>
+					<input v-model="password1" placeholder="	再次输入密码" class="a">
+				</div>
+				<div class="sex">
+					<p class="p">性别:</p>
+					<div class="c">
+						<input type="radio" id="male" value="男" v-model="sex" />
+						<label class="p">男</label>
+						<input type="radio" id="female" value="女" v-model="sex">
+						<label class="p" for="female">女</label>
+					</div>
+				</div>
+				<div class="papers">
+					<p class="p">个人身份:</p>
+					<select v-model="selected" class="a">
+						<option selected="selected" value="学生">学生</option>
+						<option value="工作">工作</option>
+						<option value="教师">教师</option>
+						<option value="其他">其他</option>
+					</select>
+				</div>
+				<div class="nus">
+					<p class="p"><i class="icon-asterisk"></i>手 机 号:</p>
+					<input v-model="num" placeholder="	请输入手机号" class="a" />
+				</div>
+				<div class="intr">
+					<p class="p"><i class="icon-asterisk"></i>邮 箱:</p>
+					<input v-model="message" placeholder="	邮箱" class="a" />
+				</div>
+				<div class="hobby">
+					<p class="p">爱好：</p>
+					<div class="f">
+						<input type="checkbox" id="ge" value="游戏" v-model="hobby">
+						<label class="p" for="baidu">游戏</label>
+						<input type="checkbox" id="wu" value="健身" v-model="hobby">
+						<label class="p" for="google">健身</label>
+						<input type="checkbox" id="shu" value="听歌" v-model="hobby">
+						<label class="p" for="tencent">听歌</label>
+					</div>
+				</div>
+				<div class="footer">
+
+					<button type="button" @click="commit" class="g">注册</button>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			//实例化一个vue对象
+			var app = new Vue({
+				el: '#app',
+				data: {
+					netname: '',
+					password: '',
+					password1: '',
+					sex: '',
+					selected: '',
+					num: '',
+					message: '',
+					hobby: []
+				},
+				methods: {
+					commit: function() {
+						var name = this.netname;
+						var password = this.password;
+						var password1 = this.password1;
+						var num = this.num;
+						var message = this.message;
+						if (name == '') {
+							alert("请输入账号");
+						} else if (password !== password1) {
+							alert("两次输入的密码不一致");
+						} else if (name == '' || password == '' || password1 == '') {
+							alert("账号或密码为空！");
+						} else if (!/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/.test(num)) {
+							alert("请输入正确的手机号！");
+						} else if (!/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(message)) {
+							alert("请输入正确的邮箱格式！");
+						} else {
+							alert("注册成功！你注册的内容\n昵称:" + name + "\n密码：" + password + "\n性别：" + this.sex +
+								"\n个人身份：" + this.selected + "\n手机号：" + num +
+								"\n个人介绍：" + this.message +
+								"\n你的爱好是" + this.hobby);
+						}
+
+					}
+				}
+			})
+		</script>
+
+	</body>
+</html>

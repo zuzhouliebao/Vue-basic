@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>computed练习</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<style type="text/css">
+			.container {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.item {
+				display: flex;
+				border: 1px solid #333333;
+				width: 100%;
+				height: 80px;
+				margin-bottom: 10px;
+				/* 垂直方向居中 */
+				align-items: center;
+			}
+
+			.s {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.item-id {
+				flex: 1 1 15%;
+			}
+
+			.item-name {
+				flex: 1 1 15%;
+			}
+
+			.item-price {
+				flex: 1 1 15%;
+			}
+
+			.item-href {
+				flex: 1 1 15%;
+				margin-left: 20px;
+			}
+
+			.item-image {
+				flex: 1 1 15%;
+				margin-right: 10px;
+			}
+
+			.item-count {
+				display: flex;
+			}
+
+			.goods-count {
+				width: 15px;
+			}
+
+			/* .des {
+				margin-left: 10px;
+
+			} */
+
+			.right {
+				display: flex;
+			}
+
+			.item-image img {
+				width: 50px;
+				height: 50px;
+			}
+
+			.btn {
+				width: 100px;
+				height: 35px;
+				border-radius: 10px;
+				background-color: rgb(255, 80, 0);
+				color: white;
+				border: none;
+				outline: none;
+				margin-top: 10px;
+			}
+
+			.left {
+				display: flex;
+			}
+
+			a {
+				text-decoration: none;
+				color: #333333;
+			}
+
+			a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- vue-app根容器 -->
+		<div id="app">
+			<div class="container">
+				<div class="item" v-for="goods in goods">
+					<div class="item-id">
+						{{goods.id}}
+					</div>
+					<div class="item-image">
+						<img :src="goods.image">
+					</div>
+					<div class="item-name">
+						{{goods.name}}
+					</div>
+					<div class="item-price">
+						￥{{goods.price}}
+					</div>
+					<div class="item-count">
+						<button type="button" @click="goods.count-=1" :disabled="goods.count===0">-</button>
+						<input type="text" class="goods-count" v-model="goods.count" />
+						<button type="button" @click="goods.count+=1" :disabled="goods.count===0">+</button>
+					</div>
+					<div class="item-href">
+						<a v-bind:href="goods.url">{{goods.title}}</a>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="s">
+				<div class="left">
+					<h3>总价：￥{{totalPrice}}</h3>
+
+				</div>
+				<div class="right">
+					<button type="button" class="btn" @click="settlement()">结算</button>
+				</div>
+			</div>
+
+			<div class="result" v-if="show">
+				你购买了{{settlement}}件商品，需要支付总价为：{{totalPrice}}元
+			</div>
+
+
+		</div>
+		<script type="text/javascript">
+			//实例化一个vue对象
+			var app = new Vue({
+				el: '#app',
+				data: {
+					goods: [{
+							id: 1,
+							image: 'img/i1.jpg',
+							name: 'iphone8',
+							price: 6000,
+							count: 1,
+							url: 'https://detail.tmall.com/item.htm?spm=a230r.1.14.1.7f185bfcTzMnaI&id=558550356564&cm_id=140105335569ed55e27b&abbucket=12&sku_properties=10004:709990523;5919063:6536025;12304035:3222911',
+							title: '查看详情'
+						},
+						{
+							id: 2,
+							image: 'img/i2.jpg',
+							name: 'iphonex',
+							price: 7000,
+							count: 1,
+							url: 'https://detail.tmall.com/item.htm?spm=a230r.1.14.1.3aed59cemGzBuN&id=562099309982&cm_id=140105335569ed55e27b&abbucket=12&sku_properties=10004:709990523;5919063:6536025;12304035:3222911',
+							title: '查看详情'
+						},
+						{
+							id: 3,
+							image: 'img/i3.png',
+							name: 'iphonexs',
+							price: 8000,
+							count: 1,
+							url: 'https://detail.tmall.com/item.htm?id=580731960102&ali_refid=a3_430583_1006:1102515942:N:iphone%20xs:26b08da512a5d348a1f0302803ba4b95&ali_trackid=1_26b08da512a5d348a1f0302803ba4b95&spm=a230r.1.14.1&sku_properties=10004:709990523;5919063:6536025',
+							title: '查看详情'
+						}
+
+					],
+					show: false
+				},
+				methods: {
+
+
+
+				},
+				computed: {
+					totalPrice: function() {
+						//定义一个变量
+						var totalPrice = 0;
+						for (var i = 0, len = this.goods.length; i < len; i++) {
+							totalPrice += this.goods[i].price * this.goods[i].count;
+
+						}
+						return totalPrice
+					},
+					settlement: function() {
+						this.show = true;
+						var totalCount = 0;
+						var len = this.goods.length;
+						for (var i = 0; i < len; i++) {
+							totalCount += this.goods[i].count;
+						}
+						return totalCount;
+					}
+
+				}
+			})
+		</script>
+
+	</body>
+</html>
